@@ -5,9 +5,22 @@
     <title>BossyProxy</title>
 </head>
 <body>
-    <form action="/browse" method="GET">
-        <input type="text" name="url" placeholder="Enter URL">
-        <button type="submit">Submit</button>
-    </form>
+    <input type="text" id="url" placeholder="Enter URL">
+    <button onclick="send()" type="submit">Submit</button>
+
+    <div id="box"></div>
+
+    <script>
+        async function send() {
+            const url = document.getElementById("url").value;
+
+            const res = await fetch("/browse?url=" + encodeURIComponent(url), {
+                method: "GET"
+            });
+
+            const text = await res.text();
+            document.getElementById("box").innerHTML = text;
+        }
+    </script>
 </body>
 </html>

@@ -9,7 +9,7 @@ func BossyProxy(w http.ResponseWriter, url string) {
 	resp, err := http.Get(url)
 
 	if err != nil {
-		http.Error(w, err.Error(), 500)
+		http.Error(w, err.Error(), http.StatusBadGateway)
 		return
 	}
 
