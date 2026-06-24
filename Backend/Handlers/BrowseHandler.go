@@ -9,6 +9,12 @@ import (
 
 func BrowseHandler(w http.ResponseWriter, r *http.Request) {
 	target := r.URL.Query().Get("url")
-	Security.ValidateURL(target)
-	Services.Fetch(w, target)
+
+	validTarget, err := Security.ValidateURL(target)
+	if err != nil {
+		http.Error(w, "Invalid URL: "+err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	Services.Fetch(w, validTarget)
 }
