@@ -1,8 +1,17 @@
 package Html
 
-import "net/url"
+import (
+	"net/url"
+)
 
-func BrowseURL(url string, base *url.URL) string {
-	return
+func BrowseURL(TargetURL string, base *url.URL) string {
+	u, err := url.Parse(TargetURL)
 
+	if err != nil {
+		return TargetURL
+	}
+
+	newBase := base.ResolveReference(u)
+
+	return "/?url=" + url.QueryEscape(newBase.String())
 }

@@ -6,7 +6,7 @@ import (
 	"golang.org/x/net/html"
 )
 
-func rewriteHTMLnode(doc *html.Node, base *url.URL) error {
+func rewriteHTMLnode(doc *html.Node, base *url.URL) {
 	if doc.Type == html.ElementNode {
 		for i := range doc.Attr {
 			switch doc.Attr[i].Key {

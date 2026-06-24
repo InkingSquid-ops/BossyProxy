@@ -1,6 +1,7 @@
 package Html
 
 import (
+	"bytes"
 	"io"
 	"net/url"
 
@@ -14,6 +15,13 @@ func rewriteHTML(r io.Reader, base *url.URL) ([]byte, error) {
 		return nil, err
 	}
 
-	rewriteHTMLnode(doc)
+	rewriteHTMLnode(doc, base)
 
+	var buf bytes.Buffer
+
+	if err := html.Render(&buf, doc); err != nil {
+		return nil, err
+	}
+
+	return buf.Bytes(), nil
 }
