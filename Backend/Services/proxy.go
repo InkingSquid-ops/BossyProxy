@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func BossyProxy(w http.ResponseWriter, url string) {
+func Fetch(w http.ResponseWriter, url string) {
 	resp, err := http.Get(url)
 
 	if err != nil {
