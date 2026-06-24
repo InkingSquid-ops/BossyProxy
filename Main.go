@@ -1,14 +1,17 @@
 package main
 
 import (
-	"BossyProxy/Backend"
 	"log"
 	"net/http"
+
+	handlers "github.com/InkingSquid-ops/BossyProxy/Backend/Handlers"
 )
 
 func main() {
-	http.HandleFunc("/", Backend.HomeHandler)
-	http.HandleFunc("/browse", Backend.BrowseHandler)
+	mux := http.NewServeMux()
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	mux.HandleFunc("/", handlers.HomeHandler)
+	mux.HandleFunc("/browse", handlers.BrowseHandler)
+
+	log.Fatal(http.ListenAndServe(":8080", mux))
 }

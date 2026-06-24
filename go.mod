@@ -1,2 +1,2 @@
-module BossyProxy
+module github.com/InkingSquid-ops/BossyProxy
 
