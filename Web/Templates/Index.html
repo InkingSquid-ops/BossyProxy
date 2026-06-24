@@ -2,25 +2,54 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BossyProxy</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <input type="text" id="url" placeholder="Enter URL">
-    <button onclick="send()" type="submit">Submit</button>
 
-    <div id="box"></div>
+    <div class="container">
+        <div class="header-container">
+            <h1>BossyProxy</h1>
+            <img src="/static/Img/Logo.png" alt="BossyProxy Logo" class="logo">
+        </div>
+        
+        <div class="search-box">
+            <input type="text" id="url" placeholder="Enter URL (e.g., google.com)">
+            <button onclick="send()">Submit</button>
+        </div>
+
+        <div id="box"></div>
+    </div>
 
     <script>
         async function send() {
-            const url = document.getElementById("url").value;
+            const urlInput = document.getElementById("url");
+            const box = document.getElementById("box");
+            const url = urlInput.value;
 
-            const res = await fetch("/browse?url=" + encodeURIComponent(url), {
-                method: "GET"
-            });
+            if (!url) return;
 
-            const text = await res.text();
-            document.getElementById("box").innerHTML = text;
+            box.innerHTML = "<p style='color: #7c7c8a; text-align: center;'>Loading content...</p>";
+
+            try {
+                const res = await fetch("/browse?url=" + encodeURIComponent(url), {
+                    method: "GET"
+                });
+
+                const text = await res.text();
+                box.innerHTML = text;
+            } catch (err) {
+                box.innerHTML = "<p style='color: #ff3333; text-align: center;'>Error fetching resource.</p>";
+            }
         }
+
+        // Allow pressing "Enter" inside the input box to submit
+        document.getElementById("url").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                send();
+            }
+        });
     </script>
 </body>
 </html>
