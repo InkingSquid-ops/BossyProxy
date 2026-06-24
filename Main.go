@@ -10,6 +10,9 @@ import (
 func main() {
 	mux := http.NewServeMux()
 
+	fs := http.FileServer(http.Dir("Web/Templates/Static"))
+	mux.Handle("/static/", http.StripPrefix("/static/", fs))
+
 	mux.HandleFunc("/", handlers.HomeHandler)
 	mux.HandleFunc("/browse", handlers.BrowseHandler)
 
