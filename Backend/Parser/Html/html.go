@@ -8,14 +8,14 @@ import (
 	"golang.org/x/net/html"
 )
 
-func rewriteHTML(r io.Reader, base *url.URL) ([]byte, error) {
+func RewriteHTML(r io.Reader, base *url.URL) ([]byte, error) {
 	doc, err := html.Parse(r)
 
 	if err != nil {
 		return nil, err
 	}
 
-	rewriteHTMLnode(doc, base)
+	RewriteHTMLnode(doc, base)
 
 	var buf bytes.Buffer
 
@@ -25,3 +25,4 @@ func rewriteHTML(r io.Reader, base *url.URL) ([]byte, error) {
 
 	return buf.Bytes(), nil
 }
+
