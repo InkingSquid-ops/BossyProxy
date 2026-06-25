@@ -19,9 +19,11 @@ func ValidateURL(raw string) string {
 	case "file", "ftp":
 		return ""
 
+	case "javascript", "mailto", "tel":
+		return ""
+
 	default:
 		return raw
 	}
 }
-
 
