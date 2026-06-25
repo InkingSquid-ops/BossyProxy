@@ -2,7 +2,6 @@ package Services
 
 import (
 	"net/http"
-	"net/url"
 
 	HTML "github.com/InkingSquid-ops/BossyProxy/Backend/Parser/Html"
 )
@@ -22,14 +21,7 @@ func Fetch(w http.ResponseWriter, TargetUrl string) {
 
 	defer resp.Body.Close()
 
-	baseURL, err := url.Parse(TargetUrl)
-
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-
-	result, err := HTML.RewriteHTML(resp.Body, baseURL)
+	result, err := HTML.RewriteHTML(resp.Body, TargetUrl)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
