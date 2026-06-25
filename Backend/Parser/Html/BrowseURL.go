@@ -4,14 +4,23 @@ import (
 	"net/url"
 )
 
-func BrowseURL(TargetURL string, base *url.URL) string {
-	u, err := url.Parse(TargetURL)
-
-	if err != nil {
-		return TargetURL
+func BrowseURL(targetURL string, base *url.URL) string {
+	if base == nil {
+		return targetURL
 	}
 
-	newBase := base.ResolveReference(u)
+	u, err := url.Parse(targetURL)
+	if err != nil {
+		return targetURL
+	}
 
-	return "/?url=" + url.QueryEscape(newBase.String())
+	switch u.Scheme {
+	case "javascript", "mailto", "tel":
+		return targetURL
+	}
+
+	resolved := base.ResolveReference(u)
+
+	return "/browse/?url=" +
+		url.QueryEscape(resolved.String())
 }
