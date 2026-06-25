@@ -14,11 +14,6 @@ func BrowseURL(targetURL string, base *url.URL) string {
 		return targetURL
 	}
 
-	switch u.Scheme {
-	case "javascript", "mailto", "tel":
-		return targetURL
-	}
-
 	resolved := base.ResolveReference(u)
 
 	return "/browse/?url=" +
