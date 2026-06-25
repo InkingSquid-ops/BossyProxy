@@ -16,14 +16,11 @@ func ValidateURL(raw string) string {
 	case "":
 		return "https://" + raw
 
-	case "file", "ftp":
-		return ""
-
-	case "javascript", "mailto", "tel":
-		return ""
+	case "http", "https":
+		return raw
 
 	default:
-		return raw
+		return ""
 	}
 }
 
