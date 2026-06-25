@@ -6,13 +6,24 @@
 }
 
 body {
-    background-color: #121214;
+    background-color: #0c0c0e;
     color: #e1e1e6;
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
     padding: 2rem;
+    overflow-x: hidden;
+}
+
+#bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
 }
 
 .container {
@@ -21,14 +32,15 @@ body {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    position: relative;
+    z-index: 1;
 }
 
-/* New: Flex container to hold the text and image side-by-side */
 .header-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px; /* Space between text and logo */
+    gap: 12px;
     margin-bottom: 0.5rem;
 }
 
@@ -36,6 +48,7 @@ h1 {
     font-size: 2rem;
     color: #FFA500;
     text-align: center;
+    text-shadow: 0 0 10px rgba(255, 165, 0, 0.2);
 }
 
 .logo {
@@ -47,11 +60,12 @@ h1 {
 .search-box {
     display: flex;
     gap: 0.5rem;
-    background: #1a1a1e;
+    background: rgba(26, 26, 30, 0.85);
+    backdrop-filter: blur(8px);
     padding: 0.5rem;
     border-radius: 8px;
     border: 1px solid #29292e;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 input[type="text"] {
@@ -77,11 +91,15 @@ button {
     font-weight: 600;
     border-radius: 6px;
     cursor: pointer;
-    transition: background 0.2s ease-in-out;
+    transition: background 0.2s ease-in-out, transform 0.1s ease;
 }
 
 button:hover {
     background-color: #FF8C00;
+}
+
+button:active {
+    transform: scale(0.98);
 }
 
 #box {
@@ -92,6 +110,6 @@ button:hover {
     border-radius: 8px;
     padding: 1.5rem;
     border: 1px solid #29292e;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
     overflow-x: auto;
 }
