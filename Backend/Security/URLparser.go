@@ -1,24 +1,26 @@
 package Security
 
 import (
-	"fmt"
+	"net/url"
 	"strings"
 )
 
 func ValidateURL(raw string) string {
-	switch {
-	case strings.Contains(raw, "file://"):
-		return fmt.Sprintf("Invalid url: %s", raw)
+	u, err := url.Parse(raw)
 
-	case strings.Contains(raw, "ftp://"):
-		return fmt.Sprintf("Invalid url: %s", raw)
-
-	default:
-		if !strings.Contains(raw, "https://") && !strings.Contains(raw, "http://") {
-			newRaw := "https://" + raw
-			return newRaw
-		}
+	if err != nil {
+		return ""
 	}
 
-	return raw
+	switch strings.ToLower(u.Scheme) {
+	case "":
+		return "https://" + raw
+
+	case "file", "ftp":
+		return ""
+
+	default:
+		return raw
+	}
 }
+
